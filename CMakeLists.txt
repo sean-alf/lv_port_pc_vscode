@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.12.4)
 project(lvgl C CXX)
 
+set(CONFIG_LV_BUILD_DEMOS OFF)
+set(CONFIG_LV_BUILD_EXAMPLES OFF)
+# set(CONFIG_LV_USE_THORVG_INTERNAL OFF)
+
 # Set the correct FreeRTOS port for your system (e.g., Posix for WSL)
 set(FREERTOS_PORT GCC_POSIX CACHE STRING "Port for FreeRTOS on Posix environment")
 
@@ -79,6 +83,7 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/gear_icon.c
     ${ICONS_DIR}/home_icon.c
     ${ICONS_DIR}/info_icon.c
+    ${ICONS_DIR}/schedule_icon.c
     ${ICONS_DIR}/undo_icon.c
     ${ICONS_DIR}/wifi_icon0.c
     ${ICONS_DIR}/wifi_icon1.c
@@ -89,15 +94,14 @@ list(APPEND ICONS_SRC
 # Create the main executable, depending on the FreeRTOS option
 add_executable(main
     ${PROJECT_SOURCE_DIR}/alf_hal.c
-    ${PROJECT_SOURCE_DIR}/events.c
     ${PROJECT_SOURCE_DIR}/main.c
     ${SOURCE_DIR}/app_ui.c
     ${SOURCE_DIR}/backstack.c
     ${SOURCE_DIR}/colors.c
     ${SOURCE_DIR}/content_area.c
     ${SOURCE_DIR}/fixed_button.c
-    ${SOURCE_DIR}/header.c
     ${SOURCE_DIR}/list_item.c
+    ${SOURCE_DIR}/side_bar.c
     ${SOURCE_DIR}/styles.c
     ${SOURCE_DIR}/time_and_date.c
     ${SOURCE_DIR}/user_prefs.c
@@ -119,9 +123,11 @@ add_executable(main
 target_compile_definitions(main PRIVATE LV_CONF_INCLUDE_SIMPLE)
 
 if(MSVC)
-    target_link_libraries(main lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES})
+    # target_link_libraries(main lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES})
+    target_link_libraries(main lvgl ${SDL2_LIBRARIES})
 else()
-    target_link_libraries(main lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES} m pthread)
+    # target_link_libraries(main lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES} m pthread)
+    target_link_libraries(main lvgl ${SDL2_LIBRARIES} m pthread)
 endif()
 
 # Only link freertos_config if the FreeRTOS directory exists
