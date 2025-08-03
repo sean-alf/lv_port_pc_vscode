@@ -32,7 +32,7 @@ if(USE_FREERTOS)
     )
 else()
     message(STATUS "FreeRTOS is disabled")
-    set(FREERTOS_SOURCES "")  # No FreeRTOS sources if FreeRTOS is disabled
+    set(FREERTOS_SOURCES "") # No FreeRTOS sources if FreeRTOS is disabled
 endif()
 
 # Main include files of the project
@@ -67,23 +67,53 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
 
+set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
+set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src)
+set(PAGES_DIR ${SOURCE_DIR}/pages)
+set(PICKER_DIR ${SOURCE_DIR}/picker)
+set(POPUP_DIR ${SOURCE_DIR}/popup)
+
+list(APPEND ICONS_SRC
+    ${ICONS_DIR}/check_icon.c
+    ${ICONS_DIR}/ex_icon.c
+    ${ICONS_DIR}/gear_icon.c
+    ${ICONS_DIR}/home_icon.c
+    ${ICONS_DIR}/info_icon.c
+    ${ICONS_DIR}/undo_icon.c
+    ${ICONS_DIR}/wifi_icon0.c
+    ${ICONS_DIR}/wifi_icon1.c
+    ${ICONS_DIR}/wifi_icon2.c
+    ${ICONS_DIR}/wifi_icon3.c
+)
+
 # Create the main executable, depending on the FreeRTOS option
-if(USE_FREERTOS)
-    add_executable(main
-        ${PROJECT_SOURCE_DIR}/main/src/main.c
-        ${PROJECT_SOURCE_DIR}/main/src/freertos_main.cpp
-        ${PROJECT_SOURCE_DIR}/main/src/mouse_cursor_icon.c
-        ${PROJECT_SOURCE_DIR}/main/src/FreeRTOS_Posix_Port.c
-        ${FREERTOS_SOURCES}  # Add only if USE_FREERTOS is enabled
-    )
-    # Link FreeRTOS libraries
-    target_link_libraries(main freertos_config FreeRTOS)
-else()
-    add_executable(main
-        ${PROJECT_SOURCE_DIR}/main/src/main.c
-        ${PROJECT_SOURCE_DIR}/main/src/mouse_cursor_icon.c
-    )
-endif()
+add_executable(main
+    ${PROJECT_SOURCE_DIR}/alf_hal.c
+    ${PROJECT_SOURCE_DIR}/events.c
+    ${PROJECT_SOURCE_DIR}/main.c
+    ${SOURCE_DIR}/app_ui.c
+    ${SOURCE_DIR}/backstack.c
+    ${SOURCE_DIR}/colors.c
+    ${SOURCE_DIR}/content_area.c
+    ${SOURCE_DIR}/fixed_button.c
+    ${SOURCE_DIR}/header.c
+    ${SOURCE_DIR}/list_item.c
+    ${SOURCE_DIR}/styles.c
+    ${SOURCE_DIR}/time_and_date.c
+    ${SOURCE_DIR}/user_prefs.c
+    ${SOURCE_DIR}/wifi.c
+    ${PAGES_DIR}/home_page.c
+    ${PAGES_DIR}/page_navigation.c
+    ${PAGES_DIR}/page.c
+    ${PAGES_DIR}/set_time_page.c
+    ${PAGES_DIR}/settings_page.c
+    ${PAGES_DIR}/time_settings_page.c
+    ${PAGES_DIR}/wifi_settings_page.c
+    ${PICKER_DIR}/date_picker/date_picker.c
+    ${PICKER_DIR}/time_picker/time_picker.c
+    ${POPUP_DIR}/popup.c
+    ${ICONS_SRC}
+)
 
 # Define LVGL configuration as a simple include
 target_compile_definitions(main PRIVATE LV_CONF_INCLUDE_SIMPLE)
@@ -138,8 +168,8 @@ endif()
 
 # On Windows, GUI applications do not show a console by default,
 # which hides log output. This ensures a console is available for logging.
-if (WIN32)
-    if (MSVC)
+if(WIN32)
+    if(MSVC)
         target_link_options(main PRIVATE "/SUBSYSTEM:CONSOLE")
     else()
         target_link_options(main PRIVATE "-mconsole")
@@ -160,6 +190,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wextra
         -Wformat-security
         -Wmaybe-uninitialized
+
         # -Wmissing-prototypes
         -Wpointer-arith
         -Wmultichar
@@ -176,15 +207,15 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wstrict-aliasing
     )
 
-if (ASAN)
-    message(STATUS "AddressSanitizer enabled")
+    if(ASAN)
+        message(STATUS "AddressSanitizer enabled")
 
-    # Add AddressSanitizer flags
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address")
-else()
-    message(STATUS "AddressSanitizer disabled")
-endif()
+        # Add AddressSanitizer flags
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address")
+    else()
+        message(STATUS "AddressSanitizer disabled")
+    endif()
 endif()

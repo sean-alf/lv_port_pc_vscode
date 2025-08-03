@@ -7,3 +7,6 @@
 [submodule "FreeRTOS"]
 	path = FreeRTOS
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "auto-door-ui-app"]
+	path = auto-door-ui-app
+	url = git@github.com:sean-alf/auto-door-ui-app.git
