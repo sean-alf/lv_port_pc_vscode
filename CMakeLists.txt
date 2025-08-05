@@ -3,6 +3,7 @@ project(lvgl C CXX)
 
 set(CONFIG_LV_BUILD_DEMOS OFF)
 set(CONFIG_LV_BUILD_EXAMPLES OFF)
+
 # set(CONFIG_LV_USE_THORVG_INTERNAL OFF)
 
 # Set the correct FreeRTOS port for your system (e.g., Posix for WSL)
@@ -95,16 +96,18 @@ list(APPEND ICONS_SRC
 add_executable(main
     ${PROJECT_SOURCE_DIR}/alf_hal.c
     ${PROJECT_SOURCE_DIR}/main.c
+    ${PROJECT_SOURCE_DIR}/user_prefs.c
     ${SOURCE_DIR}/app_ui.c
     ${SOURCE_DIR}/backstack.c
     ${SOURCE_DIR}/colors.c
     ${SOURCE_DIR}/content_area.c
     ${SOURCE_DIR}/fixed_button.c
+    ${SOURCE_DIR}/header.c
     ${SOURCE_DIR}/list_item.c
+    ${SOURCE_DIR}/main_container.c
     ${SOURCE_DIR}/side_bar.c
     ${SOURCE_DIR}/styles.c
     ${SOURCE_DIR}/time_and_date.c
-    ${SOURCE_DIR}/user_prefs.c
     ${SOURCE_DIR}/wifi.c
     ${PAGES_DIR}/home_page.c
     ${PAGES_DIR}/page_navigation.c

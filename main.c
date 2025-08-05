@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
     INFO_EVENT = lv_event_register_id();
 
-    app_ui_init(true, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+    app_ui_init(false, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
 
     while (1) {
         /* Periodically call the lv_task handler.
