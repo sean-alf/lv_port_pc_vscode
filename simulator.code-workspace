@@ -27,7 +27,8 @@
 		"files.associations": {
             "glob.h": "c",
             "lvgl.h": "c",
-            "side_bar.h": "c"
+            "side_bar.h": "c",
+            "string.h": "c"
         },
 	},
 	// tasks.json section

@@ -114,6 +114,7 @@ add_executable(main
     ${PAGES_DIR}/page.c
     ${PAGES_DIR}/set_time_page.c
     ${PAGES_DIR}/settings_page.c
+    ${PAGES_DIR}/screen_brightness_page.c
     ${PAGES_DIR}/time_settings_page.c
     ${PAGES_DIR}/wifi_settings_page.c
     ${PICKER_DIR}/date_picker/date_picker.c
