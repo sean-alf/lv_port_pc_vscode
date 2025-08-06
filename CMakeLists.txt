@@ -80,6 +80,7 @@ set(POPUP_DIR ${SOURCE_DIR}/popup)
 
 list(APPEND ICONS_SRC
     ${ICONS_DIR}/check_icon.c
+    ${ICONS_DIR}/connected_icon.c
     ${ICONS_DIR}/ex_icon.c
     ${ICONS_DIR}/gear_icon.c
     ${ICONS_DIR}/home_icon.c
@@ -117,6 +118,7 @@ add_executable(main
     ${PAGES_DIR}/screen_brightness_page.c
     ${PAGES_DIR}/time_settings_page.c
     ${PAGES_DIR}/wifi_settings_page.c
+    ${PICKER_DIR}/picker.c
     ${PICKER_DIR}/date_picker/date_picker.c
     ${PICKER_DIR}/time_picker/time_picker.c
     ${POPUP_DIR}/popup.c
