@@ -96,6 +96,7 @@ list(APPEND ICONS_SRC
 # Create the main executable, depending on the FreeRTOS option
 add_executable(main
     ${PROJECT_SOURCE_DIR}/alf_hal.c
+    ${PROJECT_SOURCE_DIR}/events.c
     ${PROJECT_SOURCE_DIR}/main.c
     ${PROJECT_SOURCE_DIR}/user_prefs.c
     ${SOURCE_DIR}/app_ui.c
