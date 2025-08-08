@@ -1,5 +1,17 @@
-cmake_minimum_required(VERSION 3.12.4)
+cmake_minimum_required(VERSION 3.23.1)
 project(lvgl C CXX)
+
+set(SHARED_COMPONENTS_DIR /Users/seanalf/esp/shared-components/components)
+list(
+    APPEND
+    SHARED_COMPONENTS_INCLUDE_DIRS
+    ${SHARED_COMPONENTS_DIR}/alf_datetime/include
+)
+list(
+    APPEND
+    SHARED_COMPONENTS_SRCS
+    ${SHARED_COMPONENTS_DIR}/alf_datetime/alf_datetime.c
+)
 
 set(CONFIG_LV_BUILD_DEMOS OFF)
 set(CONFIG_LV_BUILD_EXAMPLES OFF)
@@ -70,7 +82,7 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 
 # Add LVGL subdirectory
 add_subdirectory(lvgl)
-target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
+target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS} ${SHARED_COMPONENTS_INCLUDE_DIRS})
 
 set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src)
@@ -109,7 +121,6 @@ add_executable(main
     ${SOURCE_DIR}/main_container.c
     ${SOURCE_DIR}/side_bar.c
     ${SOURCE_DIR}/styles.c
-    ${SOURCE_DIR}/time_and_date.c
     ${SOURCE_DIR}/wifi.c
     ${PAGES_DIR}/home_page.c
     ${PAGES_DIR}/page_navigation.c
@@ -124,6 +135,7 @@ add_executable(main
     ${PICKER_DIR}/time_picker/time_picker.c
     ${POPUP_DIR}/popup.c
     ${ICONS_SRC}
+    ${SHARED_COMPONENTS_SRCS}
 )
 
 # Define LVGL configuration as a simple include
