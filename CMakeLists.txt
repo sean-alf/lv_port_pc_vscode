@@ -112,6 +112,7 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/home_icon.c
     ${ICONS_DIR}/info_icon.c
     ${ICONS_DIR}/schedule_icon.c
+    ${ICONS_DIR}/sync_icon.c
     ${ICONS_DIR}/undo_icon.c
     ${ICONS_DIR}/wifi_icon0.c
     ${ICONS_DIR}/wifi_icon1.c
