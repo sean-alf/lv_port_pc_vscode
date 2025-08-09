@@ -13,6 +13,8 @@ list(
     ${SHARED_COMPONENTS_DIR}/alf_datetime/alf_datetime.c
 )
 
+set(APP_UI_PUBLIC_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_ui/public)
+
 set(CONFIG_LV_BUILD_DEMOS OFF)
 set(CONFIG_LV_BUILD_EXAMPLES OFF)
 
@@ -82,7 +84,19 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 
 # Add LVGL subdirectory
 add_subdirectory(lvgl)
-target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS} ${SHARED_COMPONENTS_INCLUDE_DIRS})
+target_include_directories(lvgl
+    PUBLIC
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/pages
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker/time_picker
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker/date_picker
+    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/popup
+    ${SDL2_INCLUDE_DIRS}
+    ${SHARED_COMPONENTS_INCLUDE_DIRS}
+    ${APP_UI_PUBLIC_DIR}
+)
 
 set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src)
@@ -108,9 +122,9 @@ list(APPEND ICONS_SRC
 # Create the main executable, depending on the FreeRTOS option
 add_executable(main
     ${PROJECT_SOURCE_DIR}/alf_hal.c
+    ${PROJECT_SOURCE_DIR}/app_ui_prefs.c
     ${PROJECT_SOURCE_DIR}/events.c
     ${PROJECT_SOURCE_DIR}/main.c
-    ${PROJECT_SOURCE_DIR}/user_prefs.c
     ${SOURCE_DIR}/app_ui.c
     ${SOURCE_DIR}/backstack.c
     ${SOURCE_DIR}/colors.c

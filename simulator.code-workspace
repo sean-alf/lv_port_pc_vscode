@@ -8,6 +8,9 @@
         },
         {
             "path": "../../esp/shared-components"
+        },
+        {
+            "path": "../../esp/ESP32/automated-door/components/app_ui"
         }
     ],
     // extensions.json section
