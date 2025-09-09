@@ -4,13 +4,10 @@
 
 static uint8_t fake;
 
-const char* events_send_reset_pos_request() {
-    fake++;
-    fake = fake % 3;
+void events_send_reset_pos_request() {
+    // Do nothing here
+}
 
-    switch (fake) {
-    case 1: return "Some fake err 1";
-    case 2: return "Some fake err 2";
-    default: return "APP_UI_OK";
-    }
+void events_dev_mode_enable(bool enable) {
+    // Do nothing here
 }

@@ -19,16 +19,12 @@
 #define SCREEN_BRIGHTNESS_STEP 1
 #define SCREEN_BRIGHTNESS_INIT 7
 
-uint32_t INFO_EVENT = 0;
-
 static void on_brightness_change(uint8_t val) {
     LV_LOG_USER("brightness: %u", val);
 }
 
 int main(int argc, char** argv) {
     lv_init();
-
-    INFO_EVENT = lv_event_register_id();
 
     app_ui_init(false, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
 

@@ -13,7 +13,9 @@ list(
     ${SHARED_COMPONENTS_DIR}/alf_datetime/alf_datetime.c
 )
 
-set(APP_UI_PUBLIC_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_ui/public)
+set(APP_UI_ROOT_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_ui)
+set(APP_UI_PUBLIC_DIR ${APP_UI_ROOT_DIR}/public)
+set(APP_PREFS_ROOT_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_prefs)
 
 set(CONFIG_LV_BUILD_DEMOS OFF)
 set(CONFIG_LV_BUILD_EXAMPLES OFF)
@@ -96,6 +98,7 @@ target_include_directories(lvgl
     ${SDL2_INCLUDE_DIRS}
     ${SHARED_COMPONENTS_INCLUDE_DIRS}
     ${APP_UI_PUBLIC_DIR}
+    ${APP_PREFS_ROOT_DIR}
 )
 
 set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
@@ -107,6 +110,7 @@ set(POPUP_DIR ${SOURCE_DIR}/popup)
 list(APPEND ICONS_SRC
     ${ICONS_DIR}/check_icon.c
     ${ICONS_DIR}/connected_icon.c
+    ${ICONS_DIR}/display_icon.c
     ${ICONS_DIR}/ex_icon.c
     ${ICONS_DIR}/gear_icon.c
     ${ICONS_DIR}/home_icon.c
@@ -114,14 +118,16 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/schedule_icon.c
     ${ICONS_DIR}/sync_icon.c
     ${ICONS_DIR}/undo_icon.c
-    ${ICONS_DIR}/wifi_icon0.c
+    ${ICONS_DIR}/wifi_icon_lg.c
     ${ICONS_DIR}/wifi_icon1.c
     ${ICONS_DIR}/wifi_icon2.c
     ${ICONS_DIR}/wifi_icon3.c
+    ${ICONS_DIR}/wifi_icon4.c
 )
 
 # Create the main executable, depending on the FreeRTOS option
 add_executable(main
+    ${APP_PREFS_ROOT_DIR}/auto_sleep_setting.c
     ${PROJECT_SOURCE_DIR}/alf_hal.c
     ${PROJECT_SOURCE_DIR}/app_ui_prefs.c
     ${PROJECT_SOURCE_DIR}/events.c
@@ -130,13 +136,17 @@ add_executable(main
     ${SOURCE_DIR}/backstack.c
     ${SOURCE_DIR}/colors.c
     ${SOURCE_DIR}/content_area.c
+    ${SOURCE_DIR}/events_priv.c
     ${SOURCE_DIR}/fixed_button.c
     ${SOURCE_DIR}/header.c
     ${SOURCE_DIR}/list_item.c
     ${SOURCE_DIR}/main_container.c
     ${SOURCE_DIR}/side_bar.c
     ${SOURCE_DIR}/styles.c
+    ${SOURCE_DIR}/widgets.c
     ${SOURCE_DIR}/wifi.c
+    ${PAGES_DIR}/auto_sleep_settings_page.c
+    ${PAGES_DIR}/display_settings_page.c
     ${PAGES_DIR}/home_page.c
     ${PAGES_DIR}/page_navigation.c
     ${PAGES_DIR}/page.c
@@ -223,13 +233,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE
         -pedantic-errors
         -Wall
-        -Wclobbered
+        # -Wclobbered
         -Wdeprecated
-        -Wdouble-promotion
+        -Wno-double-promotion
         -Wempty-body
         -Wextra
+        -Wno-format
         -Wformat-security
-        -Wmaybe-uninitialized
+        -Wuninitialized
 
         # -Wmissing-prototypes
         -Wpointer-arith
@@ -242,7 +253,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wtype-limits
         -Wundef
         -Wuninitialized
-        -Wunreachable-code
+        -Wno-unreachable-code
         -Wfloat-conversion
         -Wstrict-aliasing
     )

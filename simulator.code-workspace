@@ -4,13 +4,10 @@
     // https://code.visualstudio.com/docs/editor/variables-reference
     "folders": [
         {
+            "path": "../../esp/ESP32/automated-door/components/app_prefs"
+        },
+        {
             "path": "."
-        },
-        {
-            "path": "../../esp/shared-components"
-        },
-        {
-            "path": "../../esp/ESP32/automated-door/components/app_ui"
         }
     ],
     // extensions.json section
@@ -32,11 +29,24 @@
             "glob.h": "c",
             "lvgl.h": "c",
             "side_bar.h": "c",
-            "string.h": "c"
+            "string.h": "c",
+            "auto_sleep_settings_page.h": "c",
+            "stdio.h": "c",
+            "app_ui_prefs.h": "c",
+            "auto_sleep_setting.h": "c",
+            "colors.h": "c",
+            "content_area.h": "c",
+            "fixed_button.h": "c",
+            "header.h": "c",
+            "list_item.h": "c",
+            "screen_brightness_page.h": "c",
+            "widgets.h": "c"
         },
         "C_Cpp.default.includePath": [
             "${default}",
-            "/Users/seanalf/esp/shared-components/components/**"
+            "${workspaceFolder}/**",
+            "/Users/seanalf/esp/shared-components/components/**",
+            "/Users/seanalf/esp/ESP32/automated-door/components/app_prefs"
         ]
     },
     // tasks.json section
