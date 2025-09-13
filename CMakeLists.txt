@@ -123,6 +123,7 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/wifi_icon2.c
     ${ICONS_DIR}/wifi_icon3.c
     ${ICONS_DIR}/wifi_icon4.c
+    ${ICONS_DIR}/wifi_error_icon.c
 )
 
 # Create the main executable, depending on the FreeRTOS option
@@ -133,7 +134,6 @@ add_executable(main
     ${PROJECT_SOURCE_DIR}/events.c
     ${PROJECT_SOURCE_DIR}/main.c
     ${SOURCE_DIR}/app_ui.c
-    ${SOURCE_DIR}/backstack.c
     ${SOURCE_DIR}/colors.c
     ${SOURCE_DIR}/content_area.c
     ${SOURCE_DIR}/events_priv.c
@@ -142,18 +142,19 @@ add_executable(main
     ${SOURCE_DIR}/list_item.c
     ${SOURCE_DIR}/main_container.c
     ${SOURCE_DIR}/side_bar.c
+    ${SOURCE_DIR}/string_helper.c
     ${SOURCE_DIR}/styles.c
     ${SOURCE_DIR}/widgets.c
-    ${SOURCE_DIR}/wifi.c
+    ${SOURCE_DIR}/wifi_icon_manager.c
     ${PAGES_DIR}/auto_sleep_settings_page.c
     ${PAGES_DIR}/display_settings_page.c
     ${PAGES_DIR}/home_page.c
     ${PAGES_DIR}/page_navigation.c
     ${PAGES_DIR}/page.c
-    ${PAGES_DIR}/set_time_page.c
-    ${PAGES_DIR}/settings_page.c
+    ${PAGES_DIR}/schedule_page.c
     ${PAGES_DIR}/screen_brightness_page.c
-    ${PAGES_DIR}/time_settings_page.c
+    ${PAGES_DIR}/system_settings_page.c
+    ${PAGES_DIR}/set_time_page.c
     ${PAGES_DIR}/wifi_settings_page.c
     ${PICKER_DIR}/picker.c
     ${PICKER_DIR}/date_picker/date_picker.c
@@ -226,6 +227,34 @@ if(WIN32)
     endif()
 endif()
 
+target_compile_options(main PRIVATE
+    -pedantic-errors
+    -Wall
+
+    -Wdeprecated
+    -Wdouble-promotion
+    -Wempty-body
+    -Wextra
+    -Wformat
+    -Wformat-security
+    -Wuninitialized
+
+    -Wmissing-prototypes
+    -Wpointer-arith
+    -Wmultichar
+    -Wpedantic # ignored for now, we convert functions to pointers for properties table.
+    -Wreturn-type
+    -Wshadow
+    -Wshift-negative-value
+    -Wsizeof-pointer-memaccess
+    -Wtype-limits
+    -Wundef
+    -Wuninitialized
+    -Wunreachable-code
+    -Wfloat-conversion
+    -Wstrict-aliasing
+)
+
 # Apply additional compile options if the build type is Debug
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Debug mode enabled")
@@ -233,6 +262,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE
         -pedantic-errors
         -Wall
+
         # -Wclobbered
         -Wdeprecated
         -Wno-double-promotion

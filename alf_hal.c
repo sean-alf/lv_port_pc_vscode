@@ -5,6 +5,7 @@
 static lv_indev_t* kb;
 
 void alf_hal_init(int32_t w, int32_t h, void* arg) {
+    (void)arg;
     lv_group_set_default(lv_group_create());
 
     lv_display_t* disp = lv_sdl_window_create(w, h);
@@ -23,6 +24,6 @@ void alf_hal_set_group(lv_group_t* new_group) {
     lv_indev_set_group(kb, new_group);
 }
 
-void alf_hal_reset_group() {
+void alf_hal_reset_group(void) {
     lv_indev_set_group(kb, lv_group_get_default());
 }

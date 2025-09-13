@@ -40,7 +40,12 @@
             "header.h": "c",
             "list_item.h": "c",
             "screen_brightness_page.h": "c",
-            "widgets.h": "c"
+            "widgets.h": "c",
+            "wifi.h": "c",
+            "wifi_icon_manager.h": "c",
+            "time_picker.h": "c",
+            "styles.h": "c",
+            "wifi_settings_page.h": "c"
         },
         "C_Cpp.default.includePath": [
             "${default}",

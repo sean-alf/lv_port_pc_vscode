@@ -1,13 +1,16 @@
 #include "auto-door-ui-app/src/events.h"
 
 #include "auto-door-ui-app/src/app_ui_err.h"
+#include "auto-door-ui-app/src/popup/popup.h"
 
-static uint8_t fake;
-
-void events_send_reset_pos_request() {
-    // Do nothing here
+void events_send_reset_pos_request(void) {
+    popup_show_message("Reset Position!!", 0);
 }
 
 void events_dev_mode_enable(bool enable) {
-    // Do nothing here
+    popup_show_message(enable ? "Dev mode enabled" : "Dev mode disabled", 0);
+}
+
+void events_send_reboot_request(void) {
+    popup_show_message("reboot!!", 0);
 }
