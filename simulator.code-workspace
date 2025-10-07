@@ -45,14 +45,17 @@
             "wifi_icon_manager.h": "c",
             "time_picker.h": "c",
             "styles.h": "c",
-            "wifi_settings_page.h": "c"
+            "wifi_settings_page.h": "c",
+            "stdlib.h": "c",
+            "timezone.h": "c"
         },
         "C_Cpp.default.includePath": [
             "${default}",
             "${workspaceFolder}/**",
             "/Users/seanalf/esp/shared-components/components/**",
-            "/Users/seanalf/esp/ESP32/automated-door/components/app_prefs"
-        ]
+            "/Users/seanalf/esp/ESP32/automated-door/components/app_prefs",
+            "/Users/seanalf/esp/ESP32/automated-door/components/timezone"
+        ],
     },
     // tasks.json section
     "tasks": {

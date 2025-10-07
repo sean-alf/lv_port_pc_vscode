@@ -6,6 +6,7 @@ static lv_indev_t* kb;
 
 void alf_hal_init(int32_t w, int32_t h, void* arg) {
     (void)arg;
+
     lv_group_set_default(lv_group_create());
 
     lv_display_t* disp = lv_sdl_window_create(w, h);

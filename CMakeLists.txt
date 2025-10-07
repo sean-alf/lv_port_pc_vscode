@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.23.1)
 project(lvgl C CXX)
 
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+
 set(SHARED_COMPONENTS_DIR /Users/seanalf/esp/shared-components/components)
 list(
     APPEND
@@ -16,6 +18,7 @@ list(
 set(APP_UI_ROOT_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_ui)
 set(APP_UI_PUBLIC_DIR ${APP_UI_ROOT_DIR}/public)
 set(APP_PREFS_ROOT_DIR /Users/seanalf/esp/ESP32/automated-door/components/app_prefs)
+set(TIMEZONE_ROOT_DIR /Users/seanalf/esp/ESP32/automated-door/components/timezone)
 
 set(CONFIG_LV_BUILD_DEMOS OFF)
 set(CONFIG_LV_BUILD_EXAMPLES OFF)
@@ -67,9 +70,10 @@ option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
 option(LV_USE_FREETYPE "Use freetype library" OFF)
 
 # Set C and C++ standards
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
 
 # Set the output path for the executable
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -99,6 +103,7 @@ target_include_directories(lvgl
     ${SHARED_COMPONENTS_INCLUDE_DIRS}
     ${APP_UI_PUBLIC_DIR}
     ${APP_PREFS_ROOT_DIR}
+    ${TIMEZONE_ROOT_DIR}
 )
 
 set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
@@ -117,6 +122,7 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/info_icon.c
     ${ICONS_DIR}/schedule_icon.c
     ${ICONS_DIR}/sync_icon.c
+    ${ICONS_DIR}/timezone_icon.c
     ${ICONS_DIR}/undo_icon.c
     ${ICONS_DIR}/wifi_icon_lg.c
     ${ICONS_DIR}/wifi_icon1.c
@@ -129,8 +135,9 @@ list(APPEND ICONS_SRC
 # Create the main executable, depending on the FreeRTOS option
 add_executable(main
     ${APP_PREFS_ROOT_DIR}/auto_sleep_setting.c
-    ${PROJECT_SOURCE_DIR}/alf_hal.c
-    ${PROJECT_SOURCE_DIR}/app_ui_prefs.c
+    ${TIMEZONE_ROOT_DIR}/timezone.cpp
+    ${PROJECT_SOURCE_DIR}/alf_hal.cpp
+    ${PROJECT_SOURCE_DIR}/app_ui_prefs.cpp
     ${PROJECT_SOURCE_DIR}/events.c
     ${PROJECT_SOURCE_DIR}/main.c
     ${SOURCE_DIR}/app_ui.c
@@ -144,6 +151,7 @@ add_executable(main
     ${SOURCE_DIR}/side_bar.c
     ${SOURCE_DIR}/string_helper.c
     ${SOURCE_DIR}/styles.c
+    ${SOURCE_DIR}/timezone_manager.cpp
     ${SOURCE_DIR}/widgets.c
     ${SOURCE_DIR}/wifi_icon_manager.c
     ${PAGES_DIR}/auto_sleep_settings_page.c
@@ -155,6 +163,7 @@ add_executable(main
     ${PAGES_DIR}/screen_brightness_page.c
     ${PAGES_DIR}/system_settings_page.c
     ${PAGES_DIR}/set_time_page.c
+    ${PAGES_DIR}/timezone_settings_page.cpp
     ${PAGES_DIR}/wifi_settings_page.c
     ${PICKER_DIR}/picker.c
     ${PICKER_DIR}/date_picker/date_picker.c
