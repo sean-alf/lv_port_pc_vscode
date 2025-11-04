@@ -113,6 +113,7 @@ set(PICKER_DIR ${SOURCE_DIR}/picker)
 set(POPUP_DIR ${SOURCE_DIR}/popup)
 
 list(APPEND ICONS_SRC
+    ${ICONS_DIR}/add_device_icon.c
     ${ICONS_DIR}/check_icon.c
     ${ICONS_DIR}/connected_icon.c
     ${ICONS_DIR}/display_icon.c
@@ -154,6 +155,7 @@ add_executable(main
     ${SOURCE_DIR}/timezone_manager.cpp
     ${SOURCE_DIR}/widgets.c
     ${SOURCE_DIR}/wifi_icon_manager.c
+    ${PAGES_DIR}/add_device_settings_page.c
     ${PAGES_DIR}/auto_sleep_settings_page.c
     ${PAGES_DIR}/display_settings_page.c
     ${PAGES_DIR}/home_page.c

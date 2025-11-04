@@ -18,3 +18,15 @@ void events_send_reboot_request(void) {
 void events_send_show_wifi_error_request(void) {
     popup_show_message("Here's a fake WiFi error!!!", 0);
 }
+
+void events_send_enable_pairing(bool enable) {
+    if (enable) {
+        popup_show_message("enable pairing", 0);
+    } else {
+        popup_show_message("disable pairing", 0);
+    }
+}
+
+void events_send_clear_paired(void) {
+    popup_show_message("clear paired devices", 0);
+}
