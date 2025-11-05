@@ -125,12 +125,12 @@ list(APPEND ICONS_SRC
     ${ICONS_DIR}/sync_icon.c
     ${ICONS_DIR}/timezone_icon.c
     ${ICONS_DIR}/undo_icon.c
-    ${ICONS_DIR}/wifi_icon_lg.c
     ${ICONS_DIR}/wifi_icon1.c
     ${ICONS_DIR}/wifi_icon2.c
     ${ICONS_DIR}/wifi_icon3.c
     ${ICONS_DIR}/wifi_icon4.c
     ${ICONS_DIR}/wifi_error_icon.c
+    ${ICONS_DIR}/wifi_tab_icon.c
 )
 
 # Create the main executable, depending on the FreeRTOS option
