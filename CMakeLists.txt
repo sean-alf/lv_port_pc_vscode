@@ -60,7 +60,7 @@ else()
 endif()
 
 # Main include files of the project
-include_directories(${PROJECT_SOURCE_DIR}/main/inc)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Define options for LVGL with default values (OFF)
 option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
@@ -88,29 +88,30 @@ add_compile_definitions($<$<BOOL:${LV_USE_LIBPNG}>:LV_USE_LIBPNG=1>)
 add_compile_definitions($<$<BOOL:${LV_USE_LIBJPEG_TURBO}>:LV_USE_LIBJPEG_TURBO=1>)
 add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 
+set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-app-ui/icons)
+set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/auto-door-app-ui/src)
+set(PAGES_DIR ${SOURCE_DIR}/pages)
+set(PICKER_DIR ${SOURCE_DIR}/picker)
+set(POPUP_DIR ${SOURCE_DIR}/popup)
+
 # Add LVGL subdirectory
 add_subdirectory(lvgl)
 target_include_directories(lvgl
     PUBLIC
     ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/pages
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker/time_picker
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/picker/date_picker
-    ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src/popup
+    ${PROJECT_SOURCE_DIR}/include
+    ${SOURCE_DIR}
+    ${PAGES_DIR}
+    ${PICKER_DIR}
+    ${PICKER_DIR}/time_picker
+    ${PICKER_DIR}/date_picker
+    ${POPUP_DIR}
     ${SDL2_INCLUDE_DIRS}
     ${SHARED_COMPONENTS_INCLUDE_DIRS}
     ${APP_UI_PUBLIC_DIR}
     ${APP_PREFS_ROOT_DIR}
     ${TIMEZONE_ROOT_DIR}
 )
-
-set(ICONS_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/icons)
-set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/auto-door-ui-app/src)
-set(PAGES_DIR ${SOURCE_DIR}/pages)
-set(PICKER_DIR ${SOURCE_DIR}/picker)
-set(POPUP_DIR ${SOURCE_DIR}/popup)
 
 list(APPEND ICONS_SRC
     ${ICONS_DIR}/add_device_icon.c
